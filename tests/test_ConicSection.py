@@ -70,5 +70,6 @@ class Test_UnitCircle(unittest.TestCase):
         self.assertTrue((self.A33 == A33).all())
         self.assertEqual(K, 1.)
 
+
 if __name__ == '__main__':
     unittest.main()

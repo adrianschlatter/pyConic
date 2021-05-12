@@ -31,7 +31,8 @@ class ConicSection(object):
         self.AQ = np.bmat([[A33, v], [v.T, F]])
 
     def __repr__(self):
-        s = '{0} * x**2 + {1} * x * y + {2} * y**2 + {3} * x + {4} * y + {5} = 0'
+        s = '{0} * x**2 + {1} * x * y + {2} * y**2 + {3} * x + ' \
+            '{4} * y + {5} = 0'
         return(s.format(*self.coefficients))
 
     @property
