@@ -65,4 +65,9 @@ setup(
     # simple. Or you can use find_packages().
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
 
+    install_requires=['numpy'],
+    extras_require={
+        'test': ['pytest', 'twine', 'check-manifest',
+                 'flake8', 'coverage'],
+    },
 )
