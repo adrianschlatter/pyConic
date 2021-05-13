@@ -12,4 +12,6 @@ helping classify and transform itself as discussed in [conic]_.
 :author: Adrian Schlatter
 """
 
+# flake8: noqa
+
 from .conic import ConicSection

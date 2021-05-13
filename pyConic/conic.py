@@ -18,7 +18,9 @@ class ConicSection(object):
     """
 
     def __init__(self, A33, v, F):
-        A33, v, F = map(np.matrix, [A33, v, F])
+        A33, v, F = [np.array(x, ndmin=2) for x in [A33, v, F]]
+        v.shape = (-1, 1)
+
         if A33.shape != (2, 2):
             raise ValueError("A33 has to be a 2x2 matrix")
         if v.shape != (2, 1):
@@ -28,10 +30,11 @@ class ConicSection(object):
         if (A33 != A33.T).all():
             raise ValueError("A33 must be symmetric")
 
-        self.AQ = np.bmat([[A33, v], [v.T, F]])
+        self.AQ = np.block([[A33, v], [v.T, F]])
 
     def __repr__(self):
-        s = '{0} * x**2 + {1} * x * y + {2} * y**2 + {3} * x + {4} * y + {5} = 0'
+        s = '{0} * x**2 + {1} * x * y + {2} * y**2 + {3} * x + ' \
+            '{4} * y + {5} = 0'
         return(s.format(*self.coefficients))
 
     @property
@@ -122,7 +125,7 @@ class ConicSection(object):
         if not self.isCentral:
             raise TypeError('Only central conics have a center')
 
-        return(-self.A33.I * self.v)
+        return(-np.linalg.inv(self.A33) * self.v)
 
     @property
     def centeredEquation(self):

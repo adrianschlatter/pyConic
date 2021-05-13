@@ -39,15 +39,15 @@ class Test_UnitCircle(unittest.TestCase):
 
     def test_A33(self):
         """Test A33"""
-        self.assertTrue((np.matrix(self.A33) == self.cs.A33).all())
+        self.assertTrue((np.array(self.A33) == self.cs.A33).all())
 
     def test_v(self):
         """Test v"""
-        self.assertTrue((np.matrix(self.v) == self.cs.v).all())
+        self.assertTrue((np.array(self.v) == self.cs.v).all())
 
     def test_F(self):
         """Test F"""
-        self.assertEqual(np.matrix(self.F), self.cs.F)
+        self.assertEqual(np.array(self.F), self.cs.F)
 
     def test_conicType(self):
         """Test that circle has conic-type 'circle'"""
@@ -69,6 +69,7 @@ class Test_UnitCircle(unittest.TestCase):
         A33, K = self.cs.centeredEquation
         self.assertTrue((self.A33 == A33).all())
         self.assertEqual(K, 1.)
+
 
 if __name__ == '__main__':
     unittest.main()

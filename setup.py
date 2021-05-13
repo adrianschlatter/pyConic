@@ -21,17 +21,17 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.1',
+    version='0.1.1',
 
     description='Python tools to work with conic sections',
     long_description=long_description,
+    long_description_content_type='text/markdown',
 
     # The project's main homepage.
     url='https://github.com/adrianschlatter/pyConic',
 
     # Author details
     author='Adrian Schlatter',
-    author_email='schlatter@phys.ethz.ch',
 
     # Choose your license
     license='Revised BSD',
@@ -54,7 +54,6 @@ setup(
         'License :: OSI Approved :: BSD License',
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
     ],
 
@@ -65,4 +64,9 @@ setup(
     # simple. Or you can use find_packages().
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
 
+    install_requires=['numpy'],
+    extras_require={
+        'test': ['pytest', 'twine', 'check-manifest',
+                 'flake8', 'coverage'],
+    },
 )
