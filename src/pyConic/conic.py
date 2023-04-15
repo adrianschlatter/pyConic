@@ -35,7 +35,7 @@ class ConicSection(object):
     def __repr__(self):
         s = '{0} * x**2 + {1} * x * y + {2} * y**2 + {3} * x + ' \
             '{4} * y + {5} = 0'
-        return(s.format(*self.coefficients))
+        return s.format(*self.coefficients)
 
     @property
     def coefficients(self):
@@ -51,32 +51,32 @@ class ConicSection(object):
         D = 2 * self.AQ[0, 2]
         E = 2 * self.AQ[1, 2]
         F = self.AQ[2, 2]
-        return(A, B, C, D, E, F)
+        return A, B, C, D, E, F
 
     @property
     def A33(self):
         """A33 of AQ = np.bmat([[A33, v], [v.T, F]])"""
-        return(self.AQ[:2, :2])
+        return self.AQ[:2, :2]
 
     @property
     def v(self):
         """v of AQ = np.bmat([[A33, v], [v.T, F]])"""
-        return(self.AQ[:2, 2])
+        return self.AQ[:2, 2]
 
     @property
     def F(self):
         """F of AQ = np.bmat([[A33, v], [v.T, F]])"""
-        return(self.AQ[2:, 2:])
+        return self.AQ[2:, 2:]
 
     @property
     def isProper(self):
         """Returns true if conic section is proper (not degenerate)"""
-        return(np.linalg.det(self.AQ) != 0)
+        return np.linalg.det(self.AQ) != 0
 
     @property
     def isDegenerate(self):
         """Returns true if conic section is degenerate (not proper)"""
-        return(not self.isProper)
+        return not self.isProper
 
     @property
     def conicType(self):
@@ -88,35 +88,35 @@ class ConicSection(object):
 
         if self.isProper:
             if detA33 < 0:
-                return('hyperbola')
+                return 'hyperbola'
             elif detA33 > 0:   # ellipse
                 if A == C and B == 0:
-                    return('circle')
+                    return 'circle'
                 else:
                     if (A + C) * detAQ < 0:
-                        return('real ellipse')
+                        return 'real ellipse'
                     elif (A + C) * detAQ > 0:
-                        return('imaginary ellipse')
+                        return 'imaginary ellipse'
             else:
-                return('parabola')
+                return 'parabola'
         else:
             if detA33 < 0:
-                return('intersecting lines')
+                return 'intersecting lines'
             elif detA33 > 0:
-                return('point')
+                return 'point'
             else:
                 if D**2 + E**2 > 4 * (A + C) * F:
-                    return('distinct real parallel lines')
+                    return 'distinct real parallel lines'
                 elif D**2 + E**2 < 4 * (A + C) * F:
-                    return('distinct imaginary parallel lines')
+                    return 'distinct imaginary parallel lines'
                 else:
-                    return('coincident lines')
+                    return 'coincident lines'
 
     @property
     def isCentral(self):
         """Returns true if conic section is central (i.e., not a parabola)"""
 
-        return(np.linalg.det(self.A33) != 0)
+        return np.linalg.det(self.A33) != 0
 
     @property
     def center(self):
@@ -125,7 +125,7 @@ class ConicSection(object):
         if not self.isCentral:
             raise TypeError('Only central conics have a center')
 
-        return(-np.linalg.inv(self.A33) * self.v)
+        return -np.linalg.inv(self.A33) * self.v
 
     @property
     def centeredEquation(self):
@@ -136,7 +136,7 @@ class ConicSection(object):
             x.T * A33 * x = K
         """
         K = - np.linalg.det(self.AQ) / np.linalg.det(self.A33)
-        return(self.A33, K)
+        return self.A33, K
 
     @property
     def standardForm(self):
@@ -161,4 +161,4 @@ class ConicSection(object):
         w, v = np.linalg.eigh(self.A33)
         K = self.centeredEquation[1]
 
-        return(w[0] / K, w[1] / K, self.center, v)
+        return w[0] / K, w[1] / K, self.center, v
